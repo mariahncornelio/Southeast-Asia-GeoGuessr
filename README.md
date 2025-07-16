@@ -45,12 +45,16 @@
  
 #### Data Visualization
 
+<img width="623" height="614" alt="Screenshot 2025-07-15 at 11 08 56 PM" src="https://github.com/user-attachments/assets/434de7c4-e729-4bb9-b8a4-32aef5a0f430" />
+
+This is a 3x3 grid of random images along with their labeled country class. 
+
 ### Problem Formulation
 
 * **Models Used:**
   * **Custom Convolutional Neural Network:** To build a lightweight baseline model from scratch and understand how well a non-transfer model could learn distinguishing features
-  * **MobileNetV2 (Transfer Learning):** MobileNet is lightweight and optimized for mobile vision tasks, making it ideal for efficient training and deployment
-  * **ResNet50 (Transfer Learning):** A deeper model known for strong performance on image tasks through residual connections
+  * **MobileNetV2 (Transfer Learning)**
+  * **ResNet50 (Transfer Learning)** 
 * **Loss Function & Optimizer:** SparseCategoricalCrossentropy(from_logits=True) and Adam optimizer with learning rate 0.001
 * **Epochs:** Up to 20 with EarlyStopping and patience = 5
 * **Callbacks:** EarlyStopping and ModelCheckpoint
@@ -68,8 +72,18 @@ Each model took **between 10 seconds to 1 minute to train** with Transformer tak
 
 ### Performance Comparison
 
+* **Custom CNN Model**
+<img width="696" height="316" alt="Screenshot 2025-07-15 at 11 10 14 PM" src="https://github.com/user-attachments/assets/9d71cd1a-5772-4b3d-bbb1-5bf1ed1caca5" />
+
+* **MobileNetV2**
+<img width="687" height="317" alt="Screenshot 2025-07-15 at 11 10 35 PM" src="https://github.com/user-attachments/assets/9ed26cd4-821b-4fdb-93b0-3a4618224ec3" />
+
+* **ResNet50**
+<img width="697" height="287" alt="Screenshot 2025-07-15 at 11 10 51 PM" src="https://github.com/user-attachments/assets/9bf5e0a2-4696-4756-8976-4f90438dc66a" />
 
 ### Conclusions
+
+<img width="446" height="93" alt="Screenshot 2025-07-15 at 11 14 38 PM" src="https://github.com/user-attachments/assets/65711acf-dc70-4673-8517-21f317cb4a8d" />
 
 
 Overall...
@@ -78,9 +92,6 @@ Overall...
 
 * **Incorporate Windowed Inputs into Tree-Based Models**
   * Explore how Random Forest and XGBoost perform when fed sliding window sequences similar to those used in deep learning models. This may improve their ability to capture temporal trends
-* **Feature Engineering & Expansion**
-* **Build an Interactive Forecasting Dashboard**
-* **Integrate into Early Warning or Emergency Systems**
 
 ## HOW TO REPRODUCE RESULTS
 
