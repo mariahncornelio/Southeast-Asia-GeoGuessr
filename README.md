@@ -2,43 +2,37 @@
 
 # Southeast Asia GeoGuessr
 
-* This repository...
+* This repository contains a deep learning project that identifies Southeast Asian countries from Google Street View images, using scene-specific coordinates and queries to gather real-world visual data.
 
 ## OVERVIEW
 
-  * **Background:**
-  * **Project Goal:**
-  * **Approach:**
-  * **Summary of Performance**
+  * **Background:** As a GeoGuessr player, I’ve found it especially challenging to distinguish between Southeast Asian countries due to their similar foliage, architecture, and general scenery. This inspired the idea: could a computer vision model perform better than a human at identifying which country an image is from?
+  * **Project Goal:** Build an image classification model that can identify whether a given Google Street View image originates from one of four Southeast Asian countries: Indonesia, Malaysia, the Philippines, or Thailand
+  * **Approach:** Google Street View Static API was used to gather real-world images based on location-specific queries (beaches, mountains, cities, etc.) across the four countries taken from Overpass Turbo. The problem was framed as a multi-class classification task using CNN's. A custom CNN, MobileNetV2, and ResNet50 models were trained and compared, analyzing accuracy and generalization/confidence performance
+  * **Summary of Performance** The best-performing model was MobileNetV2, achieving a validation accuracy of 33.75%, outperforming both the custom model (24.6%) and ResNet50 (29.3%). The results show that while classification is still difficult for this region, the model demonstrates some ability to distinguish between visually similar Southeast Asian countries
 
 ## SUMMARY OF WORK DONE
 
 ### Data
 
   * **Type:**
-    * Input:
-    * Output:
+    * Input: An image directory of various types of street-view images, with each country being it's own class directory
+    * Output: A model that outputs the predicted country, the confidence percentage, and if the prediction was correct or incorrect
   * **Size:**
-    * 
-  * **Instances:**
-    * Number of samples
+    * 886 images from Indonesia, 893 from Malaysia, 896 from the Philippines, and 898 from Thailand. 3573 total images
+  * **Splits:**
+    * 80% training and 20% validation
    
-#### Preprocessing / Clean up
+#### Compiling Data and Image Pre-processing
 
-* **Missing Values:**
-* **Encoding:**
-* **Datetime and Sorting:**
-* **Feature Selection:**
-* **Normalization:**
-* **Other:**
+* **Data Collection:**
+* **Data Cleaning:**
+* **Image Pre-processing:**
  
 #### Data Visualization
 
 ### Problem Formulation
 
-* **Input/Output**
-  * Input:
-  * Output:
 * **Models Used:**
   * **LSTM:**
   * **GRU:**
@@ -58,14 +52,6 @@ Each model took **between 10 seconds to 1 minute to train** with Transformer tak
 **Challenges:**
 
 ### Performance Comparison
-
-The primary goal of this project is to accurately detect wildfire start days, where failing to identify a true fire (false negative) can have dangerous, even deadly consequences. For this reason, I prioritized ***Recall & ROC-AUC > F1 > Precision***:
-* **Recall:** Catching as many actual fire events as possible is crucial to minimize missed alarms
-* **F1:** Balances recall and precision, helping prevent over-alerting while still catching fires
-* **Precision:** Excessive false positives can damage trust in the system and strain emergency resources
-* **ROC-AUC:** Measures the model’s ability to distinguish between fire and non-fire days, regardless of threshold
-
-While the GRU and Transformer models showed slightly better ROC-AUC and F1 scores, the ***CNN+LSTM architecture achieved the highest recall (0.85)***, which is critical in the context of wildfire forecasting where failing to detect a fire can have severe consequences. For this reason, ***CNN+LSTM was selected as the final model for the forecasting tool.*** Note that although XGBoost performed the best along with the Decision Tree model, the main goal was to choose the best **time-series** model. Those were just for comparison and curiosity.
 
 
 ### Conclusions
