@@ -8,8 +8,8 @@
 
   * **Background:** As a GeoGuessr player, I’ve found it especially challenging to distinguish between Southeast Asian countries due to their similar foliage, architecture, and general scenery. This inspired the idea: could a computer vision model perform better than a human at identifying which country an image is from?
   * **Project Goal:** Build an image classification model that can identify whether a given Google Street View image originates from one of four Southeast Asian countries: Indonesia, Malaysia, the Philippines, or Thailand
-  * **Approach:** Google Street View Static API was used to gather real-world images based on location-specific queries (beaches, mountains, cities, etc.) across the four countries taken from Overpass Turbo. The problem was framed as a multi-class classification task using CNN's. A custom CNN, MobileNetV2, and ResNet50 models were trained and compared, analyzing accuracy and generalization/confidence performance
-  * **Summary of Performance** The best-performing model was MobileNetV2, achieving a validation accuracy of 33.75%, outperforming both the custom model (24.6%) and ResNet50 (29.3%). The results show that while classification is still difficult for this region, the model demonstrates some ability to distinguish between visually similar Southeast Asian countries
+  * **Approach:** Google Street View Static API was used to gather real-world images based on location-specific queries on Overpass Turbo across the four countries. The problem was framed as a multi-class classification task using transfer learning. A custom CNN, MobileNetV2, and ResNet50 models were trained and compared, analyzing accuracy and generalization/confidence performance
+  * **Summary of Performance** The best-performing model was **MobileNetV2**, achieving a validation accuracy of 33.75%, outperforming both the custom model (24.6%) and ResNet50 (29.3%). The results show that while classification is still difficult for this region, the model demonstrates some ability to distinguish between visually similar Southeast Asian countries
 
 ## SUMMARY OF WORK DONE
 
@@ -18,7 +18,9 @@
   * **Type:**
     * Input: An image directory of various types of street-view images, with each country being it's own class directory
     * Output: A model that outputs the predicted country, the confidence percentage, and if the prediction was correct or incorrect
-  * **Size:**
+  * **Source:**
+    * Custom-built data set using queries from Overpass Turbo and images from Google Street View Static API
+  * **Size of Classes:**
     * 886 images from Indonesia, 893 from Malaysia, 896 from the Philippines, and 898 from Thailand. 3573 total images
   * **Splits:**
     * 80% training and 20% validation
@@ -26,19 +28,32 @@
 #### Compiling Data and Image Pre-processing
 
 * **Data Collection:**
+    * Source: Overpass Turbo (OT) and Google Street View Static API (GSVS API)
+    * OT Query Strategy: Each country was queried using keywords like "beach," "mountain," "urban," and "rural" to ensure diverse scenes
+    * GSVS API Image Extraction: Coordinate files were manually curated on Excel from GeoJSON's and batched to pull images from various regions within each country
 * **Data Cleaning:**
+    * Manual Filtering: Remove corrupted photos (containing obstructive blurs or duplicates)
+        * Philippines: Image #1, 63, 79, 81
+        * Thailand: Image #870, 882
+        * Malaysia: Image # 319, 798, 890
+        * Indonesia: Image # 678, 680, 682, 684, 689, 690, 697, 713, 850, 851, 853, 856, 859, 865
 * **Image Pre-processing:**
+    * Resizing: All images resized to 224x224 pixels
+    * Normalization: Pixel values scaled to range [0, 1] by dividing by 255
+    * Augmentation (Training Only): Random horizontal flip and random rotation (up to 10°)
+    * Batching and Shuffling: Data loaded in batches of size 10 and shuffled during training to prevent learning order bias
  
 #### Data Visualization
 
 ### Problem Formulation
 
 * **Models Used:**
-  * **LSTM:**
-  * **GRU:**
-  * **Bidirectional LSTM:**
-* **Loss Function & Optimizer**
-* **Hyperparamters & Threshold Tuning**
+  * **Custom Convolutional Neural Network:** To build a lightweight baseline model from scratch and understand how well a non-transfer model could learn distinguishing features
+  * **MobileNetV2 (Transfer Learning):** MobileNet is lightweight and optimized for mobile vision tasks, making it ideal for efficient training and deployment
+  * **ResNet50 (Transfer Learning):** A deeper model known for strong performance on image tasks through residual connections
+* **Loss Function & Optimizer:** SparseCategoricalCrossentropy(from_logits=True) and Adam optimizer with learning rate 0.001
+* **Epochs:** Up to 20 with EarlyStopping and patience = 5
+* **Callbacks:** EarlyStopping and ModelCheckpoint
  
 ### Training
 
