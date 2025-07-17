@@ -61,32 +61,43 @@ This is a 3x3 grid of random images along with their labeled country class.
  
 ### Training
 
-Model training was performed in **Jupyter Notebook** on a **MacBook Pro with an Apple M1 chip and 8 GB of memory.** The following libraries and frameworks were used throughout the training process:
-* TensorFlow/Keras for building and training deep learning models (LSTM, GRU, BiLSTM, Stacked LSTM, CNN+LSTM, Transformer)
-* scikit-learn for preprocessing, metrics, and tree-based models like Random Forest
-* XGBoost for training a gradient-boosted decision tree classifier
+Model training was conducted locally on a custom-built **Windows PC equipped with an AMD Ryzen 7 7700X CPU, RTX 4060 GPU, and 64 GB of DDR5 RAM**, using Jupyter Notebook. The training utilized TensorFlow/Keras along with key libraries such as numpy, matplotlib, and pandas. Training times varied by model: the **custom CNN and MobileNetV2 each took ~6 minutes**, **ResNet50 ran for ~15 minutes** (stopping at 15/20 epochs), and **early stopping** was used across all models to prevent overfitting. Total project time, including dataset curation and image cleanup, spanned about a week.
 
-Each model took **between 10 seconds to 1 minute to train** with Transformer taking the longest. In total, model training and evaluation spanned approximately **12 hours over 3 days**, including experimentation and threshold tuning. **Early stopping** was implemented for all deep learning models, with **validation loss as the monitored metric and a patience of 3 epochs, restoring the best weights** to avoid overfitting.
+Training was guided by Categorical Crossentropy loss, the Adam optimizer, and accuracy as the main metric. Model performance was evaluated using training/validation curves and early stopping callbacks. 
 
-**Challenges:**
+**Challenges:** One major challenge was the similarity in scenery across Southeast Asian countries, making fine-grained classification difficult. Manual data cleaning was essential to reduce noise. Other challenges included spatial bias due to image sampling where many images were drawn from geographic clusters, which could limit generalization. For future iterations, broader and more randomized sampling strategies, as well as more diverse and representative images (distinguishing transport types like tricycles vs. tuk-tuks or urban vs. rural settings), would be crucial for improving the model’s learning and robustness
 
 ### Performance Comparison
 
-* **Custom CNN Model**
+#### **Custom CNN Base Model**
 <img width="696" height="316" alt="Screenshot 2025-07-15 at 11 10 14 PM" src="https://github.com/user-attachments/assets/9d71cd1a-5772-4b3d-bbb1-5bf1ed1caca5" />
 
-* **MobileNetV2**
+#### **MobileNetV2 Model**
 <img width="687" height="317" alt="Screenshot 2025-07-15 at 11 10 35 PM" src="https://github.com/user-attachments/assets/9ed26cd4-821b-4fdb-93b0-3a4618224ec3" />
 
-* **ResNet50**
+#### **ResNet50 Model**
 <img width="697" height="287" alt="Screenshot 2025-07-15 at 11 10 51 PM" src="https://github.com/user-attachments/assets/9bf5e0a2-4696-4756-8976-4f90438dc66a" />
 
 ### Conclusions
 
+From the experiments conducted, **MobileNet emerged as the best-performing model, achieving the highest validation accuracy of 33.75%**, outperforming both the custom CNN and ResNet50. While all models struggled due to the inherent difficulty of the task (classifying visually similar Southeast Asian countries), MobileNet demonstrated the most stable and consistent learning curves.
+
 <img width="446" height="93" alt="Screenshot 2025-07-15 at 11 14 38 PM" src="https://github.com/user-attachments/assets/65711acf-dc70-4673-8517-21f317cb4a8d" />
 
+The custom model underfit the data, with validation accuracy hovering around 25%, equivalent to random guessing, and showed unstable training behavior, likely due to its shallow architecture. ResNet50 offered slightly better generalization and more balanced training/validation performance but lagged slightly behind MobileNet in overall accuracy. Despite increasing validation loss in both MobileNet and ResNet, the absence of extreme overfitting suggests potential for further tuning. Overall, MobileNet proved to be the most promising baseline, but additional data variety, regularization techniques, and sampling improvements are needed to push performance beyond chance levels.
 
-Overall...
+#### **MobileNet Final Model Deployment**
+<img width="691" height="697" alt="Screenshot 2025-07-16 at 9 25 59 PM" src="https://github.com/user-attachments/assets/68ce19c5-e472-4d79-864d-484c90f704df" />
+
+#### **MobileNet Final Model Deployment Performance Analysis**
+
+<img width="315" height="114" alt="Screenshot 2025-07-16 at 9 27 15 PM" src="https://github.com/user-attachments/assets/cfa9c3ca-271a-4a81-bb46-58259929ee47" />
+
+#### **MobileNet Final Model Deployment Performance Analysis - Average Confidence**
+
+<img width="664" height="398" alt="Screenshot 2025-07-16 at 9 27 38 PM" src="https://github.com/user-attachments/assets/2fc2575f-606e-42f2-a3e4-fa431caa9ce8" />
+
+**WHAT THIS MEANS:** The model shows relatively balanced confidence across all countries, with a slight tendency to overestimate predictions for Indonesia and underpredict Malaysia, while being most consistent for the Philippines and Thailand
 
 ### Future Work
 
