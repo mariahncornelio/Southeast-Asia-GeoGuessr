@@ -141,8 +141,8 @@ This project was developed and executed in Google Colab Jupyter Notebook. If you
 ### Data
 
 * **Websites Used:**
-    * https://overpass-turbo.eu/
-    * https://console.cloud.google.com --> Google Cloud Platform
+    * **Overpass Turbo Query:** https://overpass-turbo.eu/
+    * **Google Cloud Platform:** https://console.cloud.google.com
 * Dataset was built using Google Street View Static API with manually curated coordinates across Indonesia, Malaysia, the Philippines, and Thailand
 * Coordinates were gathered using map queries for specific sceneries (e.g., beaches, cities), reprojected, and sorted into a GeoDataFrame. API calls checked for available imagery; first 150 valid coordinates per scenery per country were used to conserve quota
     * **For reference, see GeoJSON_to_CSV.ipynb**
@@ -168,6 +168,6 @@ This project was developed and executed in Google Colab Jupyter Notebook. If you
 
 ## CITATIONS
 
-[1] 
+[1] Andaya, Barbara Watson. “Introduction to Southeast Asia: History, Geography, and Livelihood.” Asia Society, 2025, https://asiasociety.org/education/introduction-southeast-asia#:~:text=Southeast%20Asians%20found%20it%20easier,same%20religious%20and%20cultural%20influences.
 
-[2]
+[2] Chollet, François. “Image Classification from Scratch.” Keras, 27 Apr. 2020, last modified 9 Nov. 2023, https://keras.io/examples/vision/image_classification_from_scratch/.
