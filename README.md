@@ -2,7 +2,9 @@
 
 # Southeast Asia GeoGuessr
 
-* This repository contains a deep learning project that identifies Southeast Asian countries from Google Street View images, using scene-specific coordinates and queries to gather real-world visual data.
+This repository contains a deep learning project that identifies Southeast Asian countries from Google Street View images, using scene-specific coordinates and queries to gather real-world visual data.
+
+* **IMPORTANT:** This dataset was created using the Google Street View Static API. THe actual imagery is not distributed here to comply with Google's terms of service. You must obtain your own API key and download the images using the provided coordinates and pipelines © Google Street View. Retrieved via Google Street View Static API
 
 ## OVERVIEW
 
@@ -100,9 +102,12 @@ The custom model underfit the data, with validation accuracy hovering around 25%
 **WHAT THIS MEANS:** The model shows relatively balanced confidence across all countries, with a slight tendency to overestimate predictions for Indonesia and underpredict Malaysia, while being most consistent for the Philippines and Thailand
 
 ### Future Work
-
-* **Incorporate Windowed Inputs into Tree-Based Models**
-  * Explore how Random Forest and XGBoost perform when fed sliding window sequences similar to those used in deep learning models. This may improve their ability to capture temporal trends
+ 
+* **Increase dataset size** to support deeper and more expressive models
+* **Collect more diverse scenery samples**, especially for countries with regional visual differences (e.g., urban vs. rural Philippines)
+* **Improve sampling strategy** by selecting coordinates ***randomly*** across the entire country instead of sequentially, reducing spatial bias
+* **Ensure broader geographic coverage** to avoid clustering in specific types of landscapes (e.g., beaches only)
+* **Incorporate finer-grained features** (types of vehicles like tricycles or tuk-tuks) that may help distinguish between countries
 
 ## HOW TO REPRODUCE RESULTS
 
@@ -110,39 +115,28 @@ The custom model underfit the data, with validation accuracy hovering around 25%
 
 The list below follows the chronological order in which each component of the project was developed:
 
-* **Tabular Project Proposal MNC.pptx:** This project's proposal which includes background information and an abstract to the project
-* **Tabular Project Proposal MNC.pdf:**
-* **CA_Weather_Fire_Dataset_1984-2025.csv:**
-* **ProjectRoughDraft.ipynb:**
-* **Feasibility_Tabular_MNC.ipynb:**
-* **firedf_cleaned.csv:**
-* **Prototype_Tabular_MNC.ipynb:**
+* **Vision_Proposal_Cornelio.pdf:** This project's proposal which includes background information and an abstract
+* **GeoJSON_to_CSV.ipynb:** Includes query code to execute on Overpass Turbo website and obtain the .GeoJSON file with coordinates. API checks to see if the image for that location is available and appends the first 150 into a list
+    * **Coordinates Folder:** Contains all .GeoJSON and coordinate lists for each country
+* **Country_Image_Extracting.ipynb:** Uses API to extract images using country master coordinate list and zips the file  
+* **seageo_feasibility_and_prototype.ipynb:** The final model pipeline, including preprocessing, finetuning, training, and analysis
 
 ### Software Setup
 
 This project was developed and executed in Google Colab Jupyter Notebook. If you don’t already have it installed, you can download it as part of the Anaconda distribution or install it via pip "pip install notebook".
 
-* **Data Handling & Visualization:**
-  * pandas, numpy, matplotlib, seaborn
-* **Preprocessing & Evaluation:**
-  * sklearn.preprocessing:
-    * MinMaxScaler, StandardScaler, OrdinalEncoder
-  * sklearn.model_selection:
-    * train_test_split
-  * sklearn.metrics:
-    * recall_score, precision_score, f1_score, roc_auc_score, roc_curve, classification_report, confusion_matrix
-  * sklearn.utils:
-    * class_weight
-* **Machine Learning Models:**
-  * sklearn.linear_model.LogisticRegression
-  * sklearn.tree.DecisionTreeClassifier
-  * sklearn.ensemble.RandomForestClassifier
-* **Deep Learning (TensorFlow/Keras):**
-  * tensorflow
-    * Sequential, Model, Dense, Dropout, LSTM, GRU, Bidirectional, Conv1D, MaxPooling1D, EarlyStopping, Recall, AUC
-    * MultiHeadAttention, LayerNormalization, GlobalAveragePooling1D (used for transformer model)
-* **Gradient Boosting:**
-  * xgboost
+* os
+* numpy
+* pandas
+* matplotlib
+* random
+* tensorflow
+* keras
+    * layers, models, optimizers
+    * preprocessing.image (load_img, img_to_array)
+    * callbacks (EarlyStopping, ModelCheckpoint)
+    * applications (MobileNetV2, ResNet50)
+* sklearn
 
 ### Data
 
@@ -179,10 +173,6 @@ This project was developed and executed in Google Colab Jupyter Notebook. If you
 
 ## CITATIONS
 
-[1] Abatzoglou, J. T., & Williams, A. P. (2018). Impact of anthropogenic climate change on wildfire across western US forests. *PNAS.*
+[1] 
 
-[2] Cal Fire. “Incidents.” *CAL FIRE*, California Department of Forestry and Fire Protection, https://www.fire.ca.gov/incidents/. Accessed 28 June 2025.
-
-[3] Keith, Michael. “Exploring the LSTM Neural Network Model for Time Series.” *Towards Data Science*, 13 Jan. 2023, https://towardsdatascience.com/exploring-the-lstm-neural-network-model-for-time-series-8b7685aa8cf/.
-
-[4] Moore, Andrew. “Explainer: How Wildfires Start and Spread.” *College of Natural Resources News*, 3 Dec. 2021, https://cnr.ncsu.edu/news/2021/12/explainer-how-wildfires-start-and-spread/.
+[2]
