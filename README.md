@@ -140,36 +140,31 @@ This project was developed and executed in Google Colab Jupyter Notebook. If you
 
 ### Data
 
-* **DATA DOWNLOAD LINK:** https://zenodo.org/records/14712845
-* **All preprocessing and cleanup steps are documented and executed in the Feasibility_Tabular_MNC.ipynb notebook.** This includes:
-  * Handling missing values based on distribution (mean, median, or zeros)
-  * Cyclical encoding of seasonal and temporal features
-  * Dropping redundant or highly correlated columns
-  * Scaling features using MinMax normalization
-  * Encoding the target variable
-  * Sequence generation using a 21-day rolling window for time series modeling (in the Prototype_Tabular_MNC.ipynb notebook)
+* **Websites Used:**
+    * https://overpass-turbo.eu/
+    * https://console.cloud.google.com --> Google Cloud Platform
+* Dataset was built using Google Street View Static API with manually curated coordinates across Indonesia, Malaysia, the Philippines, and Thailand
+* Coordinates were gathered using map queries for specific sceneries (e.g., beaches, cities), reprojected, and sorted into a GeoDataFrame. API calls checked for available imagery; first 150 valid coordinates per scenery per country were used to conserve quota
+    * **For reference, see GeoJSON_to_CSV.ipynb**
+* Images were downloaded and organized into folders by country
+    * **For reference, see Country_Image_Extracting.ipynb**
+* Manual preprocessing removed broken, blurred, overly similar, or selfie-containing images
 
 ### Training
 
 * Install required packages in notebook
-* Download and prepare the data from Zenodo and the Feasibility_Tabular_MNC.ipynb pipeline, obtaining firedf_cleaned.csv
-* Train models in this order: LSTM, GRU, BiLSTM, Stacked LSTM, CNN + LSTM, Transformer, Decision Tree, XGBoost
-  * All models use Binary Crossentropy loss, Adam optimizer, and EarlyStopping callback with patience of 3 and val_loss monitoring
- * After training the base model, tune thresholds to balance Recall and F1 on the **validation set**
-* Use the obtained threshold value on the **test set**
+* Download and prepare the data (either from scratch or above, or use files in the Coordinates folder of this directory)
+* Models were trained using TensorFlow/Keras with early stopping and validation monitoring. Images were split into training and validation sets, preprocessed (resized and batched), and fed into models like MobileNetV2 and ResNet50. Training ran on a local machine with GPU support over multiple sessions
 
-***For reference, see Prototype_Tabular_MNC.ipynb***
+***For reference, see seageo_feasibility_and_prototype.ipynb***
 
 #### Performance Evaluation
 
-* For each model:
-  * Calculate key classification metrics: precision, recall, F1-score, ROC-AUC
-  * Print classification report on validation set pre-tuned
-  * Print classification report on validation set post-tuned
-  * Print classification report on test set post-tuned
-  * Plot ROC curves and compare models visually
+* After training, model performance can be evaluated using the validation set
+* Run the evaluation script to compute accuracy, loss, and confidence scores per class
+* Visualization tools like matplotlib can be used to plot training curves and compare actual vs predicted confidence by country
 
-***For reference, see Prototype_Tabular_MNC.ipynb***
+***For reference, see seageo_feasibility_and_prototype.ipynb***
 
 ## CITATIONS
 
