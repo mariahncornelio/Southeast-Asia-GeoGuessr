@@ -4,7 +4,7 @@
 
 This repository contains a deep learning project that identifies Southeast Asian countries from Google Street View images, using scene-specific coordinates and queries to gather real-world visual data.
 
-* **IMPORTANT:** This dataset was created using the Google Street View Static API. THe actual imagery is not distributed here to comply with Google's terms of service. You must obtain your own API key and download the images using the provided coordinates and pipelines © Google Street View. Retrieved via Google Street View Static API
+* **IMPORTANT:** This dataset was created using © Google Street View Static API. THe actual imagery is not distributed here to comply with Google's terms of service. You must obtain your own API key and download the images using the provided coordinates and pipelines
 
 ## OVERVIEW
 
