@@ -8,18 +8,15 @@ This repository contains a deep learning project that identifies Southeast Asian
 
 ## OVERVIEW
 
-  * **Background:** As a GeoGuessr player, I’ve found it especially challenging to distinguish between Southeast Asian countries due to their similar foliage, architecture, and general scenery. This inspired the idea: could a computer vision model perform better than a human at identifying which country an image is from?
-  * **Project Goal:** Build an image classification model that can identify whether a given Google Street View image originates from one of four Southeast Asian countries: Indonesia, Malaysia, the Philippines, or Thailand
-  * **Approach:** Google Street View Static API was used to gather real-world images based on location-specific queries on Overpass Turbo across the four countries. The problem was framed as a multi-class classification task using transfer learning. A custom CNN, MobileNetV2, and ResNet50 models were trained and compared, analyzing accuracy and generalization/confidence performance
-  * **Summary of Performance** The best-performing model was **MobileNetV2**, achieving a validation accuracy of 33.75%, outperforming both the custom model (24.6%) and ResNet50 (29.3%). The results show that while classification is still difficult for this region, the model demonstrates some ability to distinguish between visually similar Southeast Asian countries
+This project explores whether a computer vision model can outperform humans in identifying Southeast Asian countries—Indonesia, Malaysia, the Philippines, and Thailand—using Google Street View images. Images were collected via the Google Street View Static API and Overpass Turbo, then used to train a custom CNN, MobileNetV2, and ResNet50. **MobileNetV2 performed best with 33.75% accuracy**, suggesting that while the task remains challenging, models show some potential in distinguishing visually similar countries.
 
 ## SUMMARY OF WORK DONE
 
 ### Data
 
   * **Type:**
-    * Input: An image directory of various types of street-view images, with each country being it's own class directory
-    * Output: A model that outputs the predicted country, the confidence percentage, and if the prediction was correct or incorrect
+    * Input: An image directory of various types of street-view images from each country
+    * Output: Name of predicted country, confidence percentage, and if the prediction was correct or incorrect
   * **Source:**
     * Custom-built data set using queries from Overpass Turbo and images from Google Street View Static API
   * **Size of Classes:**
@@ -30,9 +27,8 @@ This repository contains a deep learning project that identifies Southeast Asian
 #### Compiling Data and Image Pre-processing
 
 * **Data Collection:**
-    * Source: Overpass Turbo (OT) and Google Street View Static API (GSVS API)
-    * OT Query Strategy: Each country was queried using keywords like "beach," "mountain," "urban," and "rural" to ensure diverse scenes
-    * GSVS API Image Extraction: Coordinate files were manually curated on Excel from GeoJSON's and batched to pull images from various regions within each country
+    * Overpass Turbo: Each country was queried using keywords like "beach," "mountain," "urban," and "rural" to ensure diversity
+    * Google Street View Static API: Coordinate files were manually curated on Excel from GeoJSON's and batched to pull images
 * **Data Cleaning:**
     * Manual Filtering: Remove corrupted photos (containing obstructive blurs or duplicates)
         * Philippines: Image #1, 63, 79, 81
@@ -54,7 +50,7 @@ This is a 3x3 grid of random images along with their labeled country class.
 ### Problem Formulation
 
 * **Models Used:**
-  * **Custom Convolutional Neural Network:** To build a lightweight baseline model from scratch and understand how well a non-transfer model could learn distinguishing features
+  * **Custom Convolutional Neural Network (Base)**
   * **MobileNetV2 (Transfer Learning)**
   * **ResNet50 (Transfer Learning)** 
 * **Loss Function & Optimizer:** SparseCategoricalCrossentropy(from_logits=True) and Adam optimizer with learning rate 0.001
